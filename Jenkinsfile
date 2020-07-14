@@ -10,16 +10,12 @@ pipeline {
                  '''
              }
          }
-	 stage('Lint HTML') {
-              steps {
-                  sh 'tidy -q -e *.html'
-              }
-         } stage('Security Scan') {
+         stage('Security Scan') {
               steps { 
                  aquaMicroscanner imageName: 'alpine:latest', notCompleted: 'exit 1', onDisallowed: 'fail'
               }
          } 
-     stage('Upload to AWS') {
+         stage('Upload to AWS') {
               steps {
                   withAWS(region:'us-east-2', credentials:'e7e7a7be-ac27-41f1-a724-33663eecae7f') {
                   sh 'echo "Uploading content with AWS creds"'
